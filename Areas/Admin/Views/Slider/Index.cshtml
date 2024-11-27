@@ -1,0 +1,45 @@
+﻿@model List<SliderListItemVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Slider</h6>
+        <a asp-action="Create" class="btn btn-outline-success">Create</a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Text</th>
+                        <th>Image Url</th>
+                        <th>Position</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Title</td>
+                            <td>@item.Text</td>
+                            <td><img width="150" src="@item.ImageUrl" /></td>
+                            <td>@(item.IsLeft == true ? "Left" : item.IsLeft == false ? "Right" : "Middle")</td>
+                            <td class="d-flex justify-content-around">
+                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info">Update</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

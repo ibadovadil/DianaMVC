@@ -1,0 +1,81 @@
+﻿@using Diana.Mvc.Areas.Admin.ViewModels
+@model IEnumerable<AdminProductListItemVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Products</h6>
+        <a asp-action="Create" class="btn btn-outline-success">Create</a>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>SellPrice</th>
+                        <th>CostPrice</th>
+                        <th>Discout</th>
+                        <th>Quantity</th>
+                        <th>ImageUrl</th>
+                        <th>Category</th>
+                        <th>Colors</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr class='@(item.IsDeleted? "bg-warning text-light" :" ")'>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.SellPrice</td> 
+                                <td>@item.CostPrice</td>
+                                <td>@item.Category?.Name</td>
+                                <td>@item.Discout</td>
+                                <td>
+                                    @if (item.ImageUrl.Contains("://")) //.startWith("http")
+                                    {
+                                        <img width="100" src="@item.ImageUrl" />
+                                    }
+                                    else
+                                    {
+                                        <img width="100" src="~/@item.ImageUrl" />
+                                    }
+                                </td>
+                                <td>@item.Quantity</td>
+                                @if (item.Colors==null ||  item.Colors.Count() ==0)
+                                {
+                                    <td>No color</td>
+                                }
+                                else
+                                {
+                                    <td>@string.Join(",", item.Colors.Select(x=>x.Name))</td>
+                                }
+                                <td class="d-flex justify-content-around">
+                                    <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-outline-info">Update</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No Data !</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

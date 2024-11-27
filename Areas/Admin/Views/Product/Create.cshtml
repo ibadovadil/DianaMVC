@@ -1,0 +1,87 @@
+﻿@model ProductCreateVM
+@{
+    ViewData["Title"] = "Create";
+}
+@* // <style>
+//     .randomclass ul li{
+//             list-style:none !important;
+//         }
+// </style> *@
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Product Create</h6>
+    </div>
+
+    <div class="card-body">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Name"> </label>
+                <input asp-for="Name" class="form-control">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"> </label>
+                <textarea asp-for="Description" class="form-control"> </textarea>
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="About"> </label>
+                <textarea asp-for="About" class="form-control"> </textarea>
+                <span class="text-danger" asp-validation-for="About"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellPrice"> </label>
+                <input asp-for="SellPrice" class="form-control">
+                <span class="text-danger" asp-validation-for="SellPrice"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CostPrice"> </label>
+                <input asp-for="CostPrice" class="form-control">
+                <span class="text-danger" asp-validation-for="CostPrice"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Discout"> </label>
+                <input asp-for="Discout" class="form-control">
+                <span class="text-danger" asp-validation-for="Discout"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity"> </label>
+                <input asp-for="Quantity" class="form-control">
+                <span class="text-danger" asp-validation-for="Quantity"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageFile"> </label>
+                <input asp-for="ImageFile" accept="image/*" class="form-control">
+                <span class="text-danger" asp-validation-for="ImageFile"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Images"> </label>
+                <input asp-for="Images" accept="image/*" class="form-control">
+                <div class="text-danger randomclass" asp-validation-summary="ModelOnly"></div> @* asp summary birden artik error gostermek ucundu *@
+                @* <span class="text-danger" asp-validation-for="Images"></span> *@
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId">Categories</label>
+                <select class="form-control" asp-for="CategoryId" asp-items='@new SelectList(ViewBag.Categories, "Id" , "Name")'>
+                    <option disabled selected>Select Category</option>
+                </select>
+                
+                <span class="text-danger" asp-validation-for="CategoryId"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorIds">Colors</label>
+                <select class="form-control" asp-for="ColorIds" asp-items='@ViewBag.Colors'>
+                    <option disabled selected>Select Color</option>
+                </select>
+
+                <span class="text-danger" asp-validation-for="ColorIds"></span>
+            </div>
+
+            <button class="btn btn-outline-success">Submit</button>
+        </form>
+    </div>
+</div>
+
+

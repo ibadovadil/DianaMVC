@@ -1,0 +1,455 @@
+﻿@model HomeVM
+@{
+	ViewData["Title"] = "Index";
+}
+
+@section scripts {
+	<script>
+			// $('#prod-pag a').click(function(ev){
+			// 	ev.preventDefault();
+			// 	var url = $(this).attr("href")
+			// 	var html = "";
+			// 	console.log(url)
+			// 	fetch(url)
+				// 	.then(res=>res.json())
+				// 	.then(data=>{
+				// 		data.items.forEach(item=>{
+				// 			html+=`<div class="col-3">
+				// 							<div class="swiper-slide">
+				// 								<!--== Start Shop Item ==-->
+				// 								<div class="product-item">
+				// 									<div class="inner-content">
+				// 										<div class="product-thumb">
+				// 											<a asp-action="Details" asp-controller="Product" asp-route-id="${item.id}">
+				// 												<img class="w-100" src="${item.imageUrl}" alt="Image-HasTech">
+				// 											</a>
+				// 											<div class="product-action">
+				// 												<div class="addto-wrap">
+				// 													<a class="add-cart" href="shop-cart.html">
+				// 														<span class="icon">
+				// 															<i class="bardy bardy-shopping-cart"></i>
+				// 															<i class="hover-icon bardy bardy-shopping-cart"></i>
+				// 														</span>
+				// 													</a>
+				// 													<a class="add-quick-view" href="javascript:void(0);">
+				// 														<span class="icon">
+				// 															<i class="bardy bardy-quick-view"></i>
+				// 															<i class="hover-icon bardy bardy-quick-view"></i>
+				// 														</span>
+				// 													</a>
+				// 												</div>
+				// 											</div>
+				// 										</div>
+				// 										<div class="product-desc">
+				// 											<div class="product-info">
+				// 												<h4 class="title"><a asp-action="Details" asp-controller="Product" asp-route-id="${item.id}">${item.name}</a></h4>
+				// 												<div class="star-content">
+				// 													<i class="fa fa-star-o"></i>
+				// 													<i class="fa fa-star-o"></i>
+				// 													<i class="fa fa-star-o"></i>
+				// 													<i class="fa fa-star-o"></i>
+				// 													<i class="fa fa-star-o"></i>
+				// 												</div>
+				// 												<div class="prices">
+				// 																<span class="price-old">${item.sellPrice} </span>
+				// 												</div>
+				// 											</div>
+				// 										</div>
+				// 									</div>
+				// 								</div>
+				// 								<!--== End Shop Item ==-->
+				// 							</div>
+				// 						</div>`
+				// 	})
+				// 	var pag =""
+				// for (let i =1 ; i <= data.lastPage ; i++)
+				// {
+				// pag+= `<li class="page-item  ${i == data.CurrentPage ? 'active' : ' '}">
+				// 	<a class="page-link">${i}</a>
+				// 	</li>`
+				// }
+				// $("#prod-pag").html(pag)
+				// return html;
+				// })
+				// 				.then(data=>$(".pag-prods").html(data))
+
+
+				// //partial
+				// ev.preventDefault();
+				// fetch($(this).attr("href"))
+				// .then(res=>res.text())
+				// // .then(data=>console.log(data))
+		// 		// .then(data=>$("#pcontainer").html(data))
+		// })
+				
+		// })
+			 $("#pcontainer").on("click", "#prod-pag a", function (ev) {
+			ev.preventDefault();
+			fetch($(this).attr("href"))
+				.then(res => res.text())
+				.then(data => $("#pcontainer").html(data))
+		})
+	</script>
+}
+<main class="main-content">
+	<!--== Start Hero Area Wrapper ==-->
+	<section class="home-slider-area">
+		<div class="swiper-container swiper-slide-gap home-slider-container default-slider-container">
+
+		@await Component.InvokeAsync("Slider") 
+
+			<!--== Add Swiper Arrows ==-->
+			<div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
+			<div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+		</div>
+	</section>
+	<!--== End Hero Area Wrapper ==-->
+	<!--== Start Product Area Wrapper ==-->
+	<section class="product-area product-list-area">
+		<div class="container">
+			<section class="product-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 m-auto">
+							<div class="section-title text-center">
+								<h2 class="title">Product List</h2>
+							</div>
+						</div>
+					</div>
+					<div class="pcontainer">
+						<partial model="Model.PaginatedProducts" name="_ProductPaginationPartial" />
+					</div>
+				</div>
+			</section>
+
+
+		</div>
+	</section>
+	<!--== End Product Area Wrapper ==-->
+	<!--== Start Product Area Wrapper ==-->
+	<section class="product-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 m-auto">
+					<div class="section-title text-center">
+						<h2 class="title">New Arrivals</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="swiper-container swiper-nav swiper-slide-gap product-slider-container">
+						<div class="swiper-wrapper">
+							@foreach (var item in Model.Products)
+							{
+								<div class="swiper-slide">
+									<!--== Start Shop Item ==-->
+									<div class="product-item">
+										<div class="inner-content">
+											<div class="product-thumb">
+												<a asp-action="Details" asp-controller="Product" asp-route-id="@item.Id">
+													<img class="w-100" src="@item.ImageUrl" alt="Image-HasTech">
+												</a>
+												<div class="product-action">
+													<div class="addto-wrap">
+														<a class="add-cart" href="shop-cart.html">
+															<span class="icon">
+																<i class="bardy bardy-shopping-cart"></i>
+																<i class="hover-icon bardy bardy-shopping-cart"></i>
+															</span>
+														</a>
+														<a class="add-wishlist" href="wishlist.html">
+															<span class="icon">
+																<i class="bardy bardy-wishlist"></i>
+																<i class="hover-icon bardy bardy-wishlist"></i>
+															</span>
+														</a>
+														<a class="add-quick-view" href="javascript:void(0);">
+															<span class="icon">
+																<i class="bardy bardy-quick-view"></i>
+																<i class="hover-icon bardy bardy-quick-view"></i>
+															</span>
+														</a>
+													</div>
+												</div>
+											</div>
+											<div class="product-desc">
+												<div class="product-info">
+													<h4 class="title"><a asp-action="Details" asp-controller="Product" asp-route-id="@item.Id">@item.Name</a></h4>
+													<div class="star-content">
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+														<i class="fa fa-star-o"></i>
+													</div>
+													<div class="prices">
+														@if (item.Discout != 0)
+														{
+															<span class="price">@(item.SellPrice - (item.SellPrice * (decimal)item.Discout / 100)) </span>
+															<span class="price-old">@item.SellPrice </span>
+														}
+														else
+														{
+															<span class="price-old">@item.SellPrice </span>
+
+														}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--== End Shop Item ==-->
+								</div>
+							}
+
+						</div>
+
+						<!--== Add Swiper navigation Buttons ==-->
+						<div class="swiper-button swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+						<div class="swiper-button swiper-button-next"><i class="fa fa-angle-right"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--== End Product Area Wrapper ==-->
+	<!--== Start Divider Area Wrapper ==-->
+	<section class="divider-area divider-offer-area bg-color-222">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="divider-style-wrap text-center">
+						<div class="divider-content">
+							<h4 class="sub-title">Special <span>Offers</span> for Subscription</h4>
+							<h4 class="title">GET INSTANT DISCOUNT FOR MEMBERSHIP</h4>
+							<p>Subscribe our newsletter and get all latest news abot our latest <br>products, promotions, offers and discount</p>
+							<div class="newsletter-content-wrap">
+								<div class="newsletter-form">
+									<form action="#">
+										<input type="email" class="form-control" placeholder="Enter your email here">
+										<button class="btn-submit" type="button">Subscribe</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--== End Divider Area Wrapper ==-->
+	<!--== Start Blog Area Wrapper ==-->
+	<section class="blog-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-lg-6 m-auto">
+					<div class="section-title text-center">
+						<h2 class="title">Latest Blog</h2>
+						<div class="desc">
+							<p>Some of our customers say that they trust us and buy our product without any hesitation because they believe us and always happy to buy our product.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="swiper-container swiper-nav swiper-slide-gap post-slider-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<!--== Start Blog Item ==-->
+								<div class="post-item">
+									<div class="inner-content">
+										<div class="thumb">
+											<a href="single-blog.html">
+												<img class="w-100" src="~/assets/img/blog/1.jpg" alt="Image-HasTech">
+											</a>
+										</div>
+										<div class="content">
+											<h4 class="title"><a href="single-blog.html">Standard dummy text ever since</a></h4>
+											<p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,...</p>
+											<a class="btn-link" href="single-blog.html">Read More</a>
+											<ul class="meta-info">
+												<li><span>By - </span><a class="author" href="blog.html">Diana Demo Admin</a></li>
+												<li><span>01 February, 2021</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--== End Blog Item ==-->
+							</div>
+							<div class="swiper-slide">
+								<!--== Start Blog Item ==-->
+								<div class="post-item">
+									<div class="inner-content">
+										<div class="thumb">
+											<a href="single-blog.html">
+												<img class="w-100" src="~/assets/img/blog/2.jpg" alt="Image-HasTech">
+											</a>
+										</div>
+										<div class="content">
+											<h4 class="title"><a href="single-blog.html">Make a type specimen book</a></h4>
+											<p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,...</p>
+											<a class="btn-link" href="single-blog.html">Read More</a>
+											<ul class="meta-info">
+												<li><span>By - </span><a class="author" href="blog.html">Diana Demo Admin</a></li>
+												<li><span>01 February, 2021</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--== End Blog Item ==-->
+							</div>
+							<div class="swiper-slide">
+								<!--== Start Blog Item ==-->
+								<div class="post-item">
+									<div class="inner-content">
+										<div class="thumb">
+											<a href="single-blog.html">
+												<img class="w-100" src="~/assets/img/blog/3.jpg" alt="Image-HasTech">
+											</a>
+										</div>
+										<div class="content">
+											<h4 class="title"><a href="single-blog.html">Lorem Ipsum is simply dummy</a></h4>
+											<p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,...</p>
+											<a class="btn-link" href="single-blog.html">Read More</a>
+											<ul class="meta-info">
+												<li><span>By - </span><a class="author" href="blog.html">Diana Demo Admin</a></li>
+												<li><span>01 February, 2021</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--== End Blog Item ==-->
+							</div>
+							<div class="swiper-slide">
+								<!--== Start Blog Item ==-->
+								<div class="post-item">
+									<div class="inner-content">
+										<div class="thumb">
+											<a href="single-blog.html">
+												<img class="w-100" src="~/assets/img/blog/4.jpg" alt="Image-HasTech">
+											</a>
+										</div>
+										<div class="content">
+											<h4 class="title"><a href="single-blog.html">It is a long established</a></h4>
+											<p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,...</p>
+											<a class="btn-link" href="single-blog.html">Read More</a>
+											<ul class="meta-info">
+												<li><span>By - </span><a class="author" href="blog.html">Diana Demo Admin</a></li>
+												<li><span>01 February, 2021</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--== End Blog Item ==-->
+							</div>
+							<div class="swiper-slide">
+								<!--== Start Blog Item ==-->
+								<div class="post-item">
+									<div class="inner-content">
+										<div class="thumb">
+											<a href="single-blog.html">
+												<img class="w-100" src="~/assets/img/blog/5.jpg" alt="Image-HasTech">
+											</a>
+										</div>
+										<div class="content">
+											<h4 class="title"><a href="single-blog.html">Sed quia non numquam</a></h4>
+											<p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,...</p>
+											<a class="btn-link" href="single-blog.html">Read More</a>
+											<ul class="meta-info">
+												<li><span>By - </span><a class="author" href="blog.html">Diana Demo Admin</a></li>
+												<li><span>01 February, 2021</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--== End Blog Item ==-->
+							</div>
+							<div class="swiper-slide">
+								<!--== Start Blog Item ==-->
+								<div class="post-item">
+									<div class="inner-content">
+										<div class="thumb">
+											<a href="single-blog.html">
+												<img class="w-100" src="~/assets/img/blog/6.jpg" alt="Image-HasTech">
+											</a>
+										</div>
+										<div class="content">
+											<h4 class="title"><a href="single-blog.html">Ratione voluptatem sequi nesciunt</a></h4>
+											<p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,...</p>
+											<a class="btn-link" href="single-blog.html">Read More</a>
+											<ul class="meta-info">
+												<li><span>By - </span><a class="author" href="blog.html">Diana Demo Admin</a></li>
+												<li><span>01 February, 2021</span></li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!--== End Blog Item ==-->
+							</div>
+						</div>
+
+						<!--== Add Swiper navigation Buttons ==-->
+						<div class="swiper-button swiper-button-prev"><i class="fa fa-angle-left"></i></div>
+						<div class="swiper-button swiper-button-next"><i class="fa fa-angle-right"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--== End Blog Area Wrapper ==-->
+	<!--== Start Feature Area Wrapper ==-->
+	<section class="feature-area">
+		<div class="feature-container">
+			<div class="row no-gutter">
+				<div class="feature-col col-xl-3 col-md-6 col-12">
+					<div class="feature-icon-box">
+						<div class="inner-content">
+							<div class="icon-box" data-bg-img="~/assets/img/icons/1.jpg"></div>
+							<div class="content">
+								<h3 class="title">Free home delivery</h3>
+								<p>Provide free home delivery for all product over $100</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="feature-col col-xl-3 col-md-6 col-12">
+					<div class="feature-icon-box">
+						<div class="inner-content">
+							<div class="icon-box" data-bg-img="~/assets/img/icons/1.jpg"></div>
+							<div class="content">
+								<h3 class="title">Quality Products</h3>
+								<p>We ensure the product quality that is our main goal</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="feature-col col-xl-3 col-md-6 col-12">
+					<div class="feature-icon-box">
+						<div class="inner-content">
+							<div class="icon-box" data-bg-img="~/assets/img/icons/1.jpg"></div>
+							<div class="content">
+								<h3 class="title">3 Days Return</h3>
+								<p>Return product within 3 days for any product you buy</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="feature-col col-xl-3 col-md-6 col-12">
+					<div class="feature-icon-box">
+						<div class="inner-content">
+							<div class="icon-box" data-bg-img="~/assets/img/icons/1.jpg"></div>
+							<div class="content">
+								<h3 class="title">Online Support</h3>
+								<p>We ensure the product quality that you can trust easily</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--== End Feature Area Wrapper ==-->
+</main>
+
